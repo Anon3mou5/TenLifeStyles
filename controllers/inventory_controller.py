@@ -3,7 +3,7 @@ from fastapi import APIRouter, Depends, UploadFile, File
 from sqlalchemy.ext.asyncio import AsyncSession
 from sqlalchemy.orm import Session
 
-from configuration.database_config import get_db, get_async_db
+from configuration.database_config import get_db
 from dto.base_dto import BaseDTO
 from schemas.inventory import InventoryBase
 from services.auth_service import AuthService
