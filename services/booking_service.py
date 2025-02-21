@@ -1,3 +1,4 @@
+import asyncio
 import datetime
 
 from sqlalchemy.orm import Session
@@ -26,6 +27,7 @@ class BookingService(metaclass=Singleton):
         self.booking_repo = BookingRepo()
         self.member_repo = MemberRepo()
         self.inventory_repo = InventoryRepo()
+        self.lock = asyncio.Lock()
 
     async def validate_member_and_items(self, request:ItemBookRequestBody,db:Session):
         """
@@ -99,8 +101,9 @@ class BookingService(metaclass=Singleton):
                 Returns:
                     DbBooking: The booking record created.
         """
-        member, item = await self.validate_member_and_items(request,db)
-        return await self.booking_repo.book_an_item(member,item,db)
+        async with self.lock:
+            member, item = await self.validate_member_and_items(request,db)
+            return await self.booking_repo.book_an_item(member,item,db)
 
     async def cancel_booking(self, request:ItemCancelRequest,db:Session):
         """
@@ -113,8 +116,9 @@ class BookingService(metaclass=Singleton):
                 Returns:
                     DbBooking: The booking record cancelled.
         """
-        member, order, inventory = await self.validate_booking(request,db)
-        return await self.booking_repo.cancel_an_item(member,order, inventory,db)
+        async with self.lock:
+            member, order, inventory = await self.validate_booking(request,db)
+            return await self.booking_repo.cancel_an_item(member,order, inventory,db)
 
     async def view_all_bookings(self, db:Session):
         return await self.booking_repo.get_all_bookings(db)
