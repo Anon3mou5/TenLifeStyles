@@ -19,7 +19,7 @@ auth_service:AuthService = AuthService()
 
 router = APIRouter(
   tags=['bookings'],
-    # dependencies=[Depends(auth_service.validate_token)]
+    dependencies=[Depends(auth_service.validate_token)]
 )
 
 @router.post("/book", response_model=BaseDTO)

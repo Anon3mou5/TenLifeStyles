@@ -13,7 +13,7 @@ auth_service:AuthService = AuthService()
 
 router = APIRouter(
   tags=['inventory'],
-# dependencies=[Depends(auth_service.validate_token)]
+dependencies=[Depends(auth_service.validate_token)]
 )
 
 @router.post("/upload-inventories", response_model=BaseDTO)

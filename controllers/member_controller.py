@@ -13,7 +13,7 @@ auth_service:AuthService = AuthService()
 
 router = APIRouter(
   tags=['member'],
-  # dependencies=[Depends(auth_service.validate_token)]
+  dependencies=[Depends(auth_service.validate_token)]
 )
 
 @router.get("/all-members", response_model=BaseDTO)

@@ -36,7 +36,7 @@ def generate_token(request: OAuth2PasswordRequestForm = Depends(), db:Session = 
     'username': user.username,
         }
 
-    return data
+    return BaseDTO(data=data)
 
 @router.post('/create', response_model=BaseDTO)
 def create_an_account(request : AuthenticationCreationRequestBody,db:Session = Depends(get_db)):
