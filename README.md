@@ -13,3 +13,4 @@
 
 ## NOTE
   1) Database is created through SQLAlchemy
+  2) Successfully Hosted Code on Render : https://tenlifestyles.onrender.com/docs#/
