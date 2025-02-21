@@ -28,10 +28,10 @@ async def get_all_members(db: Session = Depends(get_db)):
 
 
 @router.post("/upload-members", response_model=BaseDTO)
-async def upload_members(bulk_update:bool, file: UploadFile = File(...),db:Session = Depends(get_db),async_db:AsyncSession = Depends(get_async_db)):
+async def upload_members(bulk_update:bool, file: UploadFile = File(...),db:Session = Depends(get_db)):
     member_service = MemberService()
     try:
-        failed_rows = await member_service.add_members(file,bulk_update, db,async_db)
+        failed_rows = await member_service.add_members(file,bulk_update, db)
         if failed_rows and len(failed_rows)>0:
             return BaseDTO(status=206, message="partial data insertion successful, failed information is attached",data=failed_rows)
 

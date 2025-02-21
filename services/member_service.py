@@ -59,7 +59,7 @@ class MemberService(metaclass=Singleton):
             members.append(member)
         return members, failed_members
 
-    async def add_members(self, file: UploadFile,bulk_update, db:Session,async_db:AsyncSession):
+    async def add_members(self, file: UploadFile,bulk_update, db:Session):
         """
                 Adds members from an uploaded CSV file.
 
